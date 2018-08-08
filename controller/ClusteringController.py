@@ -17,20 +17,37 @@ def ClusteringController(request):
         x_features = request.form['x_features']
         x_features = properify_str(x_features)
         
-        df = pd.read_csv(dataset)
-        X_data = pd.DataFrame()
-        for i in range(len(x_features)):
-            X_data[x_features[i]] = df[x_features[i]]
+        try:
+            df = pd.read_csv(dataset)
+        except Exception as e:
+            return 'unable to read file '+e
+
+        try:
+            X_data = pd.DataFrame()
+            for i in range(len(x_features)):
+                X_data[x_features[i]] = df[x_features[i]]
+        except Exception as e:
+            return 'error occurred'+e
+
         lr = KMeans(n_clusters=int(request.form['no_of_clusters']))
         lr.fit(X_data)
-        joblib.dump(lr,'trained_models/'+'clustering_model'+user_name+model_name+'.pkl')
+
+        try:
+            joblib.dump(lr,'trained_models/'+'clustering_model'+user_name+model_name+'.pkl')
+        except Exception as e:
+            return 'unable to save trained model '+e
+
         return 'Ok model trained'
     
     x = request.form['x']
     x = properify_float(x)
-    lr = joblib.load('trained_models/'+'clustering_model'+user_name+model_name+'.pkl')
-    return " ".join(list(map(str,lr.predict(np.array(x).reshape(1,-1)))))
 
+    try:
+        lr = joblib.load('trained_models/'+'clustering_model'+user_name+model_name+'.pkl')
+        return " ".join(list(map(str,lr.predict(np.array(x).reshape(1,-1)))))
+    except Exception as e:
+        return 'unable to load model '+e
+        
 def properify_str(features):
     t = features.split(',')
     print(t)

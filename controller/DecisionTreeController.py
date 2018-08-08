@@ -20,23 +20,38 @@ def DecisionTreeController(request):
         y_features = request.form['y_features']
         test_size = float(request.form['test_size'])
         
-        df = pd.read_csv(dataset)
-        X_data = pd.DataFrame()
-        for i in range(len(x_features)):
-            X_data[x_features[i]] = df[x_features[i]]
-        label = df[y_features]
-        
+        try:
+            df = pd.read_csv(dataset)
+        except Exception as e:
+            return 'unable to read file '+e
+
+        try:
+            X_data = pd.DataFrame()
+            for i in range(len(x_features)):
+                X_data[x_features[i]] = df[x_features[i]]
+            label = df[y_features]
+        except Exception as e:
+            return 'error occurred '+e
         X_train, X_test, y_train, y_test = train_test_split(X_data, label, test_size=test_size, random_state=101)
         
         lr = DecisionTreeClassifier()
         lr.fit(X_train,y_train)
-        joblib.dump(lr,'trained_models/'+'decision_tree_model'+user_name+model_name+'.pkl')
+        try:
+            joblib.dump(lr,'trained_models/'+'decision_tree_model'+user_name+model_name+'.pkl')
+        except Exception as e:
+            return 'unable to save trained model '+e
+
         return 'Ok model trained'
     
     x = request.form['x']
     x = properify_float(x)
-    lr = joblib.load('trained_models/'+'decision_tree_model'+user_name+model_name+'.pkl')
-    return " ".join(list(map(str,lr.predict(np.array(x).reshape(1,-1)))))
+    
+    try:
+        lr = joblib.load(lr,'trained_models/'+'decision_tree_model'+user_name+model_name+'.pkl')
+        return " ".join(list(map(str,lr.predict(np.array(x).reshape(1,-1)))))
+    except Exception as e:
+        return 'unable to load trained model '+e
+    
 
 def properify_str(features):
     t = features.split(',')
