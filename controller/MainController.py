@@ -3,6 +3,7 @@ from .LogisticRegressionController import LogisticRegressionController
 from .SVMController import SVMController
 from .DecisionTreeController import DecisionTreeController
 from .ClusteringController import ClusteringController
+from .NaiveBayesController import NaiveBayesController
 
 def MainController(app, request):
     
@@ -29,4 +30,9 @@ def MainController(app, request):
     @app.route('/clustering',methods=['POST'])
     def clustering():
         return ClusteringController(request)
+
+    @app.route('/naivebayes',methods=['POST'])
+    def naiveBayes():
+        return NaiveBayesController(request)
+    
     
