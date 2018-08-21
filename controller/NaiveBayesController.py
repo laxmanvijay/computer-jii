@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 import string
-from nltk.corpus import stopwords
+#from nltk.corpus import stopwords
 from sklearn.externals import joblib
 import json
 import numpy as np
@@ -15,12 +15,6 @@ import pandas as pd
 def NaiveBayesController(request):
     user_name = request.form['user_name']
     model_name = request.form['model_name']
-    
-    lr = Pipeline([
-        ('bow', CountVectorizer(analyzer=text_process)),  # strings to token integer counts
-        ('tfidf', TfidfTransformer()),  # integer counts to weighted TF-IDF scores
-        ('classifier', MultinomialNB()),  # train on TF-IDF vectors w/ Naive Bayes classifier
-    ])
 
     if request.form['process']=='train':
         dataset = request.files['data']
@@ -42,8 +36,14 @@ def NaiveBayesController(request):
         except Exception as e:
             return 'error occurred'+e
         X_train, X_test, y_train, y_test = train_test_split(X_data, label, test_size=test_size, random_state=101)
-        
-        lr.fit(X_train, y-train)
+        print("loaded and splitted data")
+        lr = Pipeline([
+        ('bow', CountVectorizer()),  # strings to token integer counts
+        ('tfidf', TfidfTransformer()),  # integer counts to weighted TF-IDF scores
+        ('classifier', MultinomialNB()),  # train on TF-IDF vectors w/ Naive Bayes classifier
+        ])
+
+        lr.fit(X_train, y_train)
         try:
             joblib.dump(lr,'trained_models/'+'naivebayes_model'+user_name+model_name+'.pkl')
         except Exception as e:
@@ -52,9 +52,9 @@ def NaiveBayesController(request):
         return 'Ok model trained'
     
     x = request.form['x']
-
+    x = pd.Series(x)
     try:
-        lr = joblib.load('trained_models/'+'svm_model'+user_name+model_name+'.pkl')
+        lr = joblib.load('trained_models/'+'naivebayes_model'+user_name+model_name+'.pkl')
         return " ".join(list(map(str,lr.predict(x))))
     except Exception as e:
         return 'unable to load trained model '+e
