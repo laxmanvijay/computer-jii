@@ -1,3 +1,4 @@
 trained_models/
 .vscode/
-controller/__pycache__/
+controller/__pycache__
+node_modules/
