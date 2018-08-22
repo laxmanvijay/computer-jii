@@ -1,11 +1,10 @@
 from flask import Flask,request
 from controller import MainController
-from database_connector.connector import connect
+from database_connector import dao
 
 app = Flask(__name__)
 
-db = connect()
 
-MainController.MainController(app, request)
+MainController.MainController(app, request, dao)
 
 app.run('localhost')

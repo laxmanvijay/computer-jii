@@ -6,8 +6,8 @@ import json
 import numpy as np
 import pandas as pd
 
-def ClusteringController(request):
-    user_name = request.form['user_name']
+def ClusteringController(request,db):
+    email = request.form['emai;']
     model_name = request.form['model_name']
     
     if request.form['process']=='train':
@@ -33,7 +33,8 @@ def ClusteringController(request):
         lr.fit(X_data)
 
         try:
-            joblib.dump(lr,'trained_models/'+'clustering_model'+user_name+model_name+'.pkl')
+            db.addUserModel(email,'clustering',model_name)
+            joblib.dump(lr,'trained_models/'+'clustering_model'+email+model_name+'.pkl')
         except Exception as e:
             return 'unable to save trained model '+e
 
@@ -43,7 +44,7 @@ def ClusteringController(request):
     x = properify_float(x)
 
     try:
-        lr = joblib.load('trained_models/'+'clustering_model'+user_name+model_name+'.pkl')
+        lr = joblib.load('trained_models/'+'clustering_model'+email+model_name+'.pkl')
         return " ".join(list(map(str,lr.predict(np.array(x).reshape(1,-1)))))
     except Exception as e:
         return 'unable to load model '+e

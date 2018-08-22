@@ -12,8 +12,8 @@ import numpy as np
 import pandas as pd
 
 
-def NaiveBayesController(request):
-    user_name = request.form['user_name']
+def NaiveBayesController(request,db):
+    email = request.form['email']
     model_name = request.form['model_name']
 
     if request.form['process']=='train':
@@ -45,7 +45,8 @@ def NaiveBayesController(request):
 
         lr.fit(X_train, y_train)
         try:
-            joblib.dump(lr,'trained_models/'+'naivebayes_model'+user_name+model_name+'.pkl')
+            db.addUserModel(email,'naivebayes',model_name)
+            joblib.dump(lr,'trained_models/'+'naivebayes_model'+email+model_name+'.pkl')
         except Exception as e:
             return 'unable to save trained model '+e
 
@@ -54,7 +55,7 @@ def NaiveBayesController(request):
     x = request.form['x']
     x = pd.Series(x)
     try:
-        lr = joblib.load('trained_models/'+'naivebayes_model'+user_name+model_name+'.pkl')
+        lr = joblib.load('trained_models/'+'naivebayes_model'+email+model_name+'.pkl')
         return " ".join(list(map(str,lr.predict(x))))
     except Exception as e:
         return 'unable to load trained model '+e

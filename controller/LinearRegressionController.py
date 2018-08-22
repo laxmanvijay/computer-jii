@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 
-def LinearRegressionController(request=None):
+def LinearRegressionController(request=None,db=None):
     
     user_name = request.form['user_name']
     model_name = request.form['model_name']

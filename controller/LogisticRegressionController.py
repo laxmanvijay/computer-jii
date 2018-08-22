@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 
 
-def LogisticRegressionController(request=None):
-    user_name = request.form['user_name']
+def LogisticRegressionController(request=None,db=None):
+    email = request.form['email']
     model_name = request.form['model_name']
 
     if request.form['process']=='train':
@@ -39,7 +39,8 @@ def LogisticRegressionController(request=None):
         lr.fit(X_train,y_train)
 
         try:
-            joblib.dump(lr,'trained_models/'+'logistic_model'+user_name+model_name+'.pkl')
+            db.addUserModel(email,'logreg',model_name)
+            joblib.dump(lr,'trained_models/'+'logistic_model'+email+model_name+'.pkl')
         except Exception as e:
             return 'unable to save trained model '+e
 
@@ -49,7 +50,7 @@ def LogisticRegressionController(request=None):
     x = properify_float(x)
 
     try:
-        lr = joblib.load('trained_models/'+'logistic_model'+user_name+model_name+'.pkl')
+        lr = joblib.load('trained_models/'+'logistic_model'+email+model_name+'.pkl')
         return " ".join(list(map(str,lr.predict(np.array(x).reshape(1,-1)))))
     except Exception as e:
         return 'unable to load trained model '+e

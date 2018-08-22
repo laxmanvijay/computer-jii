@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 
 
-def DecisionTreeController(request):
-    user_name = request.form['user_name']
+def DecisionTreeController(request,db):
+    email = request.form['email']
     model_name = request.form['model_name']
     
     if request.form['process']=='train':
@@ -37,7 +37,8 @@ def DecisionTreeController(request):
         lr = DecisionTreeClassifier()
         lr.fit(X_train,y_train)
         try:
-            joblib.dump(lr,'trained_models/'+'decision_tree_model'+user_name+model_name+'.pkl')
+            db.addUserModel(email,'decisiontree',model_name)
+            joblib.dump(lr,'trained_models/'+'decision_tree_model'+email+model_name+'.pkl')
         except Exception as e:
             return 'unable to save trained model '+e
 
@@ -47,7 +48,7 @@ def DecisionTreeController(request):
     x = properify_float(x)
     
     try:
-        lr = joblib.load(lr,'trained_models/'+'decision_tree_model'+user_name+model_name+'.pkl')
+        lr = joblib.load(lr,'trained_models/'+'decision_tree_model'+email+model_name+'.pkl')
         return " ".join(list(map(str,lr.predict(np.array(x).reshape(1,-1)))))
     except Exception as e:
         return 'unable to load trained model '+e

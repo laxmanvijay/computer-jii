@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 
 
-def SVMController(request):
-    user_name = request.form['user_name']
+def SVMController(request,db):
+    email = request.form['email']
     model_name = request.form['model_name']
 
     if request.form['process']=='train':
@@ -37,7 +37,8 @@ def SVMController(request):
         lr = SVC()
         lr.fit(X_train,y_train)
         try:
-            joblib.dump(lr,'trained_models/'+'svm_model'+user_name+model_name+'.pkl')
+            db.addUserModel(email,'svm',model_name)
+            joblib.dump(lr,'trained_models/'+'svm_model'+email+model_name+'.pkl')
         except Exception as e:
             return 'unable to save trained model '+e
 
@@ -46,7 +47,7 @@ def SVMController(request):
     x = request.form['x']
     x = properify_float(x)
     try:
-        lr = joblib.load('trained_models/'+'svm_model'+user_name+model_name+'.pkl')
+        lr = joblib.load('trained_models/'+'svm_model'+email+model_name+'.pkl')
         return " ".join(list(map(str,lr.predict(np.array(x).reshape(1,-1)))))
     except Exception as e:
         return 'unable to load trained model '+e
