@@ -2,3 +2,5 @@ trained_models/
 .vscode/
 controller/__pycache__/
 node_modules/
+
+database_connector/db_connector.py

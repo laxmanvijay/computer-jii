@@ -4,6 +4,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
+from .db_connector import connector
 
 Base = declarative_base()
 
@@ -32,6 +33,6 @@ class Model(Base):
         self.model_name = model_name
 
 
-engine = create_engine('sqlite:///computer_jii.db')
-
+engine = create_engine(connector)
+#'sqlite:///computer_jii.db'
 Base.metadata.create_all(engine)

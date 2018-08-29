@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>computer jii</title>
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="js/modernizr.js"></script>
+    <script src="js/pace.min.js"></script>
+</head>
+<body id='top'>
+    <div class="row contact-content" data-aos="fade-up"></div>
+        <div class="contact-primary">
+
+            <h1>Register</h1>
+
+            <form name="contactForm" id="contactForm" method="post" action="/createuser" novalidate="novalidate">
+                <fieldset>
+
+                <div class="form-field">
+                    <input name="user_name" type="text" id="contactName" placeholder="Your Name" value="" minlength="2" required aria-required="true" class="full-width">
+                </div>
+                <div class="form-field">
+                    <input name="email" type="text" id="contactName" placeholder="Your Email" value="" minlength="2" required aria-required="true" class="full-width">
+                </div>
+                <div class="form-field">
+                    <input name="password" type="password" id="contactEmail" placeholder="Your Password" value="" required aria-required="true" class="full-width">
+                </div>
+            
+                <div class="form-field">
+                    <button class="full-width btn--primary">Submit</button>
+                    <div class="submit-loader">
+                        <div class="text-loader">Sending...</div>
+                        <div class="s-loader">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                </fieldset>
+            </form>
+
+            <!-- contact-warning -->
+            <div class="message-warning">
+                Something went wrong. Please try again.
+            </div> 
+        
+            <!-- contact-success -->
+            <div class="message-success">
+                Your message was sent, thank you!<br>
+            </div>
+
+        </div>
+
+    
+</body>
+</html>

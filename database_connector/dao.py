@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
- 
+from .db_connector import connector
 from .dto import User, Model, Base
 
-engine = create_engine('sqlite:///computer_jii.db')
+engine = create_engine(connector)
 
 Base.metadata.bind = engine
  
@@ -36,14 +36,19 @@ def login(email,password):
     #except:
     #    return "failed"
 
+def getUserNameByEmail(email):
+    user = session.query(User).filter(User.email==email).one()
+    return user.name
+
+
 def getUserModel(email):
     try:
         models = session.query(Model).filter(Model.email==email).all()
-        out = tuple()
+        out = []
         for model in models:
-            out.append({model_name:model.model_name,model_type:model.model_type})
+            out.append({'model_name':model.model_name,'model_type':model.model_type})
         return out
-    except:
+    except Exception as e:
         print(e)
         return "failed"
 
