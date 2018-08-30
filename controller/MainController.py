@@ -17,21 +17,28 @@ def MainController(app, request, db, render_template, redirect, session):
     ###
     # back end routes
     ###
+
     @app.route('/createuser', methods=['POST'])
     def createUser():
-        if CreateUserController(request=request, db=db)=='ok':
+        res = CreateUserController(request=request, db=db)
+        if res=='ok':
             session['authenticated']=True
             session['user_name'] = request.form['user_name']
             session['email'] = request.form['email']
             return redirect('/')
+        else:
+            return redirect('/login_page?error=user_exist')
 
     @app.route('/login', methods=['POST'])
     def login():
-        if LoginController(request=request, db=db)=='password match':
+        res=LoginController(request=request, db=db)
+        if res=='password match':
             session['authenticated']=True
             session['user_name'] = db.getUserNameByEmail(request.form['email'])
             session['email'] = request.form['email']
             return redirect('/')
+        elif res=='user not exist':
+            return redirect('/register_page?error=true')
         else:
             return redirect('/login_page?error=true')
 
@@ -43,42 +50,43 @@ def MainController(app, request, db, render_template, redirect, session):
     @app.route('/linreg', methods=['POST'])
     def linreg():
         if session['authenticated']==True:
-            return LinearRegressionController(request=request, db=db)
+            if LinearRegressionController(request=request, db=db, session=session)=='Ok model trained':
+                return redirect('/dashboard_page')
         else:
             return redirect('login_page?error=False')
 
     @app.route('/logreg', methods=['POST'])
     def logreg():
         if session['authenticated']==True:
-            return LogisticRegressionController(request=request, db=db)
+            return LogisticRegressionController(request=request, db=db, session=session)
         else:
             return redirect('login_page?error=False')
 
     @app.route('/svm', methods=['POST'])
     def svm():
         if session['authenticated']==True:
-            return SVMController(request=request, db=db)
+            return SVMController(request=request, db=db, session=session)
         else:
             return redirect('login_page?error=False')
 
     @app.route('/decisiontree', methods=['POST'])
     def decisionTree():
         if session['authenticated']==True:
-            return DecisionTreeController(request=request, db=db)
+            return DecisionTreeController(request=request, db=db, session=session)
         else:
             return redirect('login_page?error=False')
 
     @app.route('/clustering', methods=['POST'])
     def clustering():
         if session['authenticated']==True:
-            return ClusteringController(request=request, db=db)
+            return ClusteringController(request=request, db=db, session=session)
         else:
             return redirect('login_page?error=False')
 
     @app.route('/naivebayes', methods=['POST'])
     def naiveBayes():
         if session['authenticated']==True:
-            return NaiveBayesController(request=request, db=db)
+            return NaiveBayesController(request=request, db=db, session=session)
         else:
             return redirect('login_page?error=False')
     

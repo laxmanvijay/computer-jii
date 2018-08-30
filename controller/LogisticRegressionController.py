@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 
 
-def LogisticRegressionController(request=None, db=None):
-    email = request.form['email']
+def LogisticRegressionController(request, db, session):
+    email = session['email']
     model_name = request.form['model_name']
 
     if request.form['process'] == 'train':

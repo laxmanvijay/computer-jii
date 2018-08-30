@@ -7,9 +7,9 @@ import numpy as np
 import pandas as pd
 
 
-def LinearRegressionController(request=None,db=None):
+def LinearRegressionController(request,db,session):
     
-    user_name = request.form['user_name']
+    user_name = session['email']
     model_name = request.form['model_name']
     
     if request.form['process']=='train':
@@ -40,6 +40,7 @@ def LinearRegressionController(request=None,db=None):
         lr.fit(X_train,y_train)
         try:
             joblib.dump(lr,'trained_models/'+'linear_model'+user_name+model_name+'.pkl')
+            db.addUserModel(email,'linear_model',model_name)
         except Exception as e:
             return 'unable to save trained model '+e
 

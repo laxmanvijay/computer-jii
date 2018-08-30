@@ -12,8 +12,8 @@ import numpy as np
 import pandas as pd
 
 
-def NaiveBayesController(request, db):
-    email = request.form['email']
+def NaiveBayesController(request, db, session):
+    email = session['email']
     model_name = request.form['model_name']
 
     if request.form['process'] == 'train':

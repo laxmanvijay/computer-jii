@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 
 
-def SVMController(request,db):
-    email = request.form['email']
+def SVMController(request,db,session):
+    email = session['email']
     model_name = request.form['model_name']
 
     if request.form['process']=='train':

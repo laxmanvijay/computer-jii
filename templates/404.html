@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--[if lt IE 9 ]><html class="no-js oldie" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Computer jii</title>
-     <!-- CSS
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Glint</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/vendor.css">
@@ -20,10 +33,9 @@
     ================================================== -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
 </head>
 <body>
-    <!-- header
-    ================================================== -->
     <header class="s-header">
 
             <div class="header-logo">
@@ -31,11 +43,11 @@
                     <img src="images/logo.png" alt="Homepage">
                 </a>
             </div>
-    
+
             <nav class="header-nav">
-    
+
                 <a href="#0" class="header-nav__close" title="close"><span>Close</span></a>
-    
+
                 <div class="header-nav__content">
                     <h3>Navigation</h3>
                     
@@ -66,49 +78,40 @@
                             <a href="#"><i class="fa fa-dribbble"></i></a>
                         </li>
                     </ul>
-    
+
                 </div> <!-- end header-nav__content -->
-    
+
             </nav>  <!-- end header-nav -->
-    
+
             <a class="header-menu-toggle" href="#0">
                 <span class="header-menu-text">Menu</span>
                 <span class="header-menu-icon"></span>
             </a>
-    
+
         </header>
+        <section id='about' class="s-about">
 
-        <h1>Welcome to your dashboard, {{user_name}}</h1>
-        <h3>Train new model</h3>
-        <div class="row section-header has-bottom-sep" data-aos="fade-up">
-                <div class="col-full">
-                    <h3 class="subhead subhead--dark"><a href="/linreg_page">Linear Regression</a></h3>
-                </div>
-            </div>
-            <br>
-        <h2>My Models</h2>
+                <div class="row section-header has-bottom-sep" data-aos="fade-up">
+                    <div class="col-full">
+                        <h3 class="subhead subhead--dark">Hello There</h3>
+                        <h1 class="display-1 display-1--light">We Are dsl</h1>
+                    </div>
+                </div> <!-- end section-header -->
         
-        <div>
-            <table claass="striped">
-                <tbody>
-                    <thead>
-                        <tr>
-                            <td>name</td>
-                            <td>type</td>
-                        </tr>
-                    </thead>
-            {%for model in models%}
-                <tr>
-                <td><h3>{{model['model_name']}}</h3></td>
-                <td><h4>{{model['model_type']}}</h4></td>
-                </tr>
-            {%endfor%}
-            </table>
-        </div>
-
-
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+                <div class="row about-desc" data-aos="fade-up">
+                    <div class="col-full">
+                        <p>
+                        Sorry, the page you are looking for is not found :( </p>
+                    </div>
+                </div> <!-- end about-desc -->
+        
+                <!-- end about-stats -->
+        
+                <div class="about__line"></div>
+        
+            </section>
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="js/plugins.js"></script>
+            <script src="js/main.js"></script> 
 </body>
 </html>

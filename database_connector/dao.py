@@ -11,30 +11,39 @@ DBSession = sessionmaker(bind=engine)
 
 session = DBSession()
 
+def checkUserExist(email):
+    o=[]
+    user = session.query(User.email).all()
+    for i in user:
+        o.append(i[0])
+    if email in o:
+        return True
+    return False
 
 def createUser(name,email,password):
-    #try:
-    user = User(name,email,password)
-    session.add(user)
-    session.commit()
-    return "ok"
+    user_check = checkUserExist(email)
+    if not user_check:
+        user = User(name,email,password)
+        session.add(user)
+        session.commit()
+        return "ok"
+    else:
+        return "user exists"
     #except:
     #    print("err")
     #    return "not ok"
 
 
 def login(email,password):
-    #try:
-    user = session.query(User).filter(User.email==email).one()
-    if user==None:
+    user_check = checkUserExist(email)
+    if not user_check:
         return "user not exist"
     else:
+        user = session.query(User).filter(User.email==email).one()
         if user.password == password:
             return "password match"
         else:
             return "password do not match"
-    #except:
-    #    return "failed"
 
 def getUserNameByEmail(email):
     user = session.query(User).filter(User.email==email).one()

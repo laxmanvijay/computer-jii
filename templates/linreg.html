@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>computer jii</title>
     
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/vendor.css">
@@ -72,26 +72,28 @@
     <div class="row contact-content" data-aos="fade-up"></div>
         <div class="contact-primary">
 
-            <h1>Login</h1>
-
-            {% if error=='true'%}
-            <h3>Incorrect username or password</h3>
-            {%endif%}
-            {% if error=='user_exist'%}
-            <h3>User already exists.Please Login</h3>
-            {%endif%}
-            <form name="contactForm" id="contactForm" method="post" action="/login" novalidate="novalidate">
+            <form name="contactForm" id="contactForm" method="post" enctype="multipart/form-data" action="/linreg" novalidate="novalidate">
                 <fieldset>
-
                 <div class="form-field">
-                    <input name="email" type="text" id="contactName" placeholder="Your Email" value="" minlength="2" required aria-required="true" class="full-width">
+                    <input name="model_name" type="text" id="modelName" placeholder="Model Name" value="" minlength="2" aria-required="true" class="full-width" required>
                 </div>
                 <div class="form-field">
-                    <input name="password" type="password" id="contactEmail" placeholder="Your Password" value="" required aria-required="true" class="full-width">
-                </div>
-            
+                        <input name="process" type="hidden" id="processName" value="train" minlength="2" aria-required="true" class="full-width" required>
+                    </div>
                 <div class="form-field">
-                    <input type="submit" value="Submit" class="full-width btn--primary"/>
+                        <input name="data" type="file" id="data" aria-required="true" class="full-width" required>
+                    </div>
+                <div class="form-field">
+                    <input name="x_features" type="text" id="X_features" placeholder="X_features:length, width, size" value="" minlength="2" aria-required="true" class="full-width" required>
+                </div>
+                <div class="form-field">
+                        <input name="y_features" type="text" id="y_features" placeholder="y_features:label" value="" minlength="2" aria-required="true" class="full-width" required>
+                    </div>
+                <div class="form-field">
+                        <input name="test_size" type="text" id="test_size" placeholder="test size" value="" minlength="2" aria-required="true" class="full-width" required>
+                    </div>
+                <div class="form-field">
+                    <button class="full-width btn--primary">Submit</button>
                     <div class="submit-loader">
                         <div class="text-loader">Sending...</div>
                         <div class="s-loader">
@@ -105,18 +107,8 @@
                 </fieldset>
             </form>
 
-            <!-- contact-warning -->
-            <div class="message-warning">
-                Something went wrong. Please try again.
-            </div> 
-        
-            <!-- contact-success -->
-            <div class="message-success">
-                Your message was sent, thank you!<br>
-            </div>
-
         </div>
 
-        
+    
 </body>
 </html>
