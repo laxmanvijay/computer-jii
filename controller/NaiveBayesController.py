@@ -45,7 +45,6 @@ def NaiveBayesController(request, db, session):
 
         lr.fit(X_train, y_train)
         try:
-            db.addUserModel(email, 'naivebayes', model_name)
             joblib.dump(lr, 'trained_models/'+'naivebayes_model'+email+model_name+'.pkl')
         except Exception as e:
             return 'unable to save trained model '+e

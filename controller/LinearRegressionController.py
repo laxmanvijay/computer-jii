@@ -40,7 +40,6 @@ def LinearRegressionController(request,db,session):
         lr.fit(X_train,y_train)
         try:
             joblib.dump(lr,'trained_models/'+'linear_model'+user_name+model_name+'.pkl')
-            db.addUserModel(email,'linear_model',model_name)
         except Exception as e:
             return 'unable to save trained model '+e
 

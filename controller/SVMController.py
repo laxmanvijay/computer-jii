@@ -36,12 +36,9 @@ def SVMController(request,db,session):
         
         lr = SVC()
         lr.fit(X_train,y_train)
-        try:
-            db.addUserModel(email,'svm',model_name)
-            joblib.dump(lr,'trained_models/'+'svm_model'+email+model_name+'.pkl')
-        except Exception as e:
-            return 'unable to save trained model '+e
-
+        print("trained")
+        joblib.dump(lr,'trained_models/'+'svm_model'+email+model_name+'.pkl')
+        print("returning")
         return 'Ok model trained'
     
     x = request.form['x']

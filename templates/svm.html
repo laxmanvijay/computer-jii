@@ -119,6 +119,14 @@ body {
             <i class="fa fa-bars"></i>
           </a>
           <a href="/" class="w3-bar-item w3-button w3-white">Computer jii</a>
+          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-white"><i class="fa fa-th"></i> Products</a>
+          {%if user_name != None%}
+          <a href="/dashboard_page" class="w3-bar-item w3-button w3-hide-small w3-white"><i class="fa fa-user"></i>My DashBoard</a>
+          <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-white"><i class="fa fa-envelope"></i> Logout</a>
+          {%else%}
+          <a href="/login_page?error=false" class="w3-bar-item w3-button w3-hide-small w3-white"><i class="fa fa-user"></i>Login</a>
+          <a href="/register_page?error=false" class="w3-bar-item w3-button w3-hide-small w3-white"><i class="fa fa-envelope"></i> Register</a>
+         {%endif%}
           <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red w3-white">
             <i class="fa fa-search"></i> Search
           </a>
@@ -127,25 +135,28 @@ body {
         <!-- Navbar on small screens -->
         <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
           <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
+          {%if user_name!=None%}
+          <a href="/dashboard_page" class="w3-bar-item w3-button" onclick="toggleFunction()">My DashBoard</a>
+          <a href="/logout" class="w3-bar-item w3-button" onclick="toggleFunction()">Logout</a>
+         {%else%}
+          <a href="/login_page?error=false" class="w3-bar-item w3-button" onclick="toggleFunction()">Login</a>
+          <a href="/register_page?error=false" class="w3-bar-item w3-button" onclick="toggleFunction()">Register</a>
+          {%endif%}
           <a href="#" class="w3-bar-item w3-button">SEARCH</a>
         </div>
       </div>
     <div class="login-page">
-        {%if error=='error'%}
-        <div class="w3-panel w3-red">
-        <h4 class="w3-text w3-text-red w3-center">User not registered, please register first.</h4>
-        </div>
-        {%endif%}
         <div class="form">
-          <form class="login-form" method="POST" action="/createuser">
-            <input name="user_name" type="text" placeholder="username"/>
-            <input name="email" type="email" placeholder="email"/>
-            <input name="mobile" type="number" placeholder="mobile number"/>
-            <input name="designation" type="text" placeholder="designation at work"/>
-            <input name="location" type="text" placeholder="location"/>
-            <input name="password" type="password" placeholder="password"/>
-            <button>Register</button>
-            <p class="message">Already registered?<a href="/login_page">Sign In</a></p>
+          <form class="login-form" method="POST" action="/svm" enctype="multipart/form-data">
+            <input name="model_type" type="hidden" value="svm"/>
+            <input name="model_name" type="text" placeholder="model name"/>
+            <input name="process" type="hidden" value="train"/>
+            <label for="data">Provide the csv data file:</label>
+            <input type="file" name="data"/>
+            <input type="text" name="x_features" placeholder="x features"/>
+            <input name="y_features" type="text" placeholder="y features"/>
+            <input name="test_size" type="text" placeholder="test size"/>
+            <button>train and create api</button>
           </form>
         </div>
       </div>

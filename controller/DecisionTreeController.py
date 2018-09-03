@@ -37,7 +37,6 @@ def DecisionTreeController(request,db,session):
         lr = DecisionTreeClassifier()
         lr.fit(X_train,y_train)
         try:
-            db.addUserModel(email,'decisiontree',model_name)
             joblib.dump(lr,'trained_models/'+'decision_tree_model'+email+model_name+'.pkl')
         except Exception as e:
             return 'unable to save trained model '+e

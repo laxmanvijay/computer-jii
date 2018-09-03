@@ -33,7 +33,6 @@ def ClusteringController(request,db,session):
         lr.fit(X_data)
 
         try:
-            db.addUserModel(email,'clustering',model_name)
             joblib.dump(lr,'trained_models/'+'clustering_model'+email+model_name+'.pkl')
         except Exception as e:
             return 'unable to save trained model '+e

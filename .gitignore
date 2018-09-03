@@ -3,4 +3,5 @@ trained_models/
 controller/__pycache__/
 node_modules/
 
+datasets/
 database_connector/db_connector.py

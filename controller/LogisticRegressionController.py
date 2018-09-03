@@ -39,7 +39,6 @@ def LogisticRegressionController(request, db, session):
         lr.fit(X_train, y_train)
 
         try:
-            db.addUserModel(email, 'logreg', model_name)
             joblib.dump(lr, 'trained_models/'+'logistic_model'+email+model_name+'.pkl')
         except Exception as e:
             return 'unable to save trained model '+e
